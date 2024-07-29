@@ -36,6 +36,14 @@ version=0.0.3
 
 This documentation provides an overview of the task for developing a machine learning API using FastAPI, with endpoints for inference on single data points and batch data, as well as a training endpoint. The test also includes implementing a local model versioning system. Below, you'll find detailed instructions and guidelines for each component.
 
+
+## Code
+
+The pipelines were design using a layered architecture and dependecy injection to build the application services. Also design patterns were used like the factory pattern to be able to have a multi model application.
+
+Everything is containerized and ready for deployment in any cloud provider. The versioning system is local but could be easily replace by some service like Mlflow, as everything is abstracted.
+
+
 ## Project Structure
 
 ```
@@ -229,7 +237,4 @@ This `Makefile` provides a simple interface for managing your development tasks.
 Unit tests are provided in the test file These tests cover various aspects of the API, including single and batch inference and model training. Tests run inside docker container:
 ![alt text](files/images/image-13.png)
 
-## Code architecture
-
-The pipelines were design using a layered architecture and dependecy injection to build the application services. Also design patterns were used like the factory pattern to be able to have a multi model application.
 
