@@ -104,7 +104,7 @@ Response:
 Response:
 ```json
 {
-  "predictions": [0, 1, ...],
+  "predictions": [0, 1]
 }
 ```
 ![alt text](files/images/image-10.png)
@@ -124,10 +124,10 @@ Response:
 - JSON object containing a message about the status of the training process and the new model version.
 
 **Example**:
-
+model_name
 ```json
 POST /train
-model_name
+
 {
   "max_depth": 10
 }
@@ -156,7 +156,8 @@ a `model.pkl` file a folder called `artifacts` where the all the additional file
 
 ### Saving Models
 - After training, the new model is saved with an random version number and with all the versioning files inside the folder.
-![alt text](image.png)
+
+![alt text](files/images/image-7.png)
 ## Dependencies
 
 - All required dependencies are listed in the `requirements.txt` file. To install them, use:
