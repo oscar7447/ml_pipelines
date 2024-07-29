@@ -10,8 +10,8 @@ import json
 from typing import List
 import numpy as np
 from pydantic import BaseModel
-from trainer_application_service import TrainerApplicationService
-from predictor_application_service import PredictorApplicationService, PredictorApplicationBatchService
+from loan_model.training.application.trainer_application_service import TrainerApplicationService
+from loan_model.inference.application.predictor_application_service import PredictorApplicationService, PredictorApplicationBatchService
 app = FastAPI(title="Qubika Test",description="Model training and inference pipelines")
 
  
