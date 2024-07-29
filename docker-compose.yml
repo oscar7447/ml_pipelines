@@ -1,0 +1,29 @@
+services:
+  app_api:
+    image: app_api
+    container_name: app_api
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      network: host
+      args:
+        BUILDKIT_INLINE_CACHE: 0
+    env_file:
+      - ./.env
+    entrypoint: /bin/bash  
+    command:
+      - -c
+      - |        
+        uvicorn main:app --reload --host 0.0.0.0 --port 8080
+    networks:
+      - main
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/app
+    healthcheck:
+      interval: 60s
+      retries: 10
+      test: curl --write-out 'HTTP %{http_code}' --fail --silent --output /dev/null http://localhost:8080/health
+networks:
+  main:
