@@ -213,3 +213,17 @@ The `Makefile` provided in the project is designed to streamline common tasks su
 
 This `Makefile` provides a simple interface for managing your development tasks. By using these commands, you can streamline your workflow and ensure consistency across different environments.
 
+![alt text](files/images/image-15.png)
+
+![alt text](files/images/image-14.png)
+
+![alt text](files/images/image-12.png)
+
+## Testing
+Unit tests are provided in the test file These tests cover various aspects of the API, including single and batch inference and model training. Tests run inside docker container:
+![alt text](files/images/image-13.png)
+
+## Code architecture
+
+The pipelines were design using a layered architecture and dependecy injection to build the application services. Also design patterns were used like the factory pattern to be able to have a multi model application.
+
