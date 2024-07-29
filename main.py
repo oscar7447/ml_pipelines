@@ -7,16 +7,22 @@ from fastapi import (
     Request,
 )
 import numpy as np
+from typing import Dict, Any
 from loan_model.training.application.trainer_application_service import TrainerApplicationService
 from loan_model.inference.application.predictor_application_service import PredictorApplicationService, PredictorApplicationBatchService
+from loan_model.training.training.enums import Models
 app = FastAPI(title="Qubika Test",description="Model training and inference pipelines")
 
  
-@app.get("/train")
-def train_model(dataset_path = "./files/dataset.csv"):
+@app.post("/train")
+def train_model(model_name:Models, 
+                model_parameters:Dict[str, Any],
+    dataset_path = "./files/dataset.csv"):
     service = TrainerApplicationService(dataset_path=dataset_path)
-    model_version = service.train()
-    return {"model_version": model_version}
+    model_version, model = service.train(model_name, **model_parameters)
+    return {"model_version": model_version,
+            "model_params":str(model.get_params()),
+            "model_name":str(model)}
 
 @app.get("/predict")
 def inference(age: int, 

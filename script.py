@@ -25,6 +25,6 @@ class TrainerApplicationService:
 if __name__ == "__main__":
     dataset_path = "./files/dataset.csv"
     service = TrainerApplicationService(dataset_path=dataset_path)
-    model_parameters = {}
+    model_parameters = {"max_depth":10}
     model_version, model = service.train(Models.RANDOM_FOREST_CLASSIFIER, **model_parameters)
     print(1)

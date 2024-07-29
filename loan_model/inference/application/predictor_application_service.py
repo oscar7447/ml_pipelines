@@ -47,3 +47,4 @@ class PredictorApplicationService:
 if __name__ == "__main__":
     service = PredictorApplicationService()
     print(service.predict())
+    
