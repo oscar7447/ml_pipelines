@@ -66,32 +66,20 @@ qubika_test/
 
 **Endpoint**: `/predict`
 
-**Method**: `POST`
+**Method**: `GET`
 
 **Description**: Takes a single data point as input and returns the model's prediction.
 
-**Request Body**:
-- JSON object with the features required by the model.
+**Input**
+Model features and model version
 
 **Response**:
-- JSON object containing the prediction and the version of the model used.
-
-**Example**:
-
-```json
-POST /predict
-{
-  "feature1": value1,
-  "feature2": value2,
-  ...
-}
-```
+- JSON object containing the prediction
 
 Response:
 ```json
 {
-  "prediction": 123,
-  "model_version": "v1"
+  "prediction": "Approved",
 }
 ```
 
@@ -99,32 +87,22 @@ Response:
 
 **Endpoint**: `/predict_batch`
 
-**Method**: `POST`
+**Method**: `GET`
 
 **Description**: Takes a batch of data points and returns predictions for each.
 
-**Request Body**:
-- JSON array of objects, where each object represents a data point with the same structure as required by the single data point endpoint.
+**Input**:
+- Path where the data of the features is located and model version
 
 **Response**:
 - JSON object containing an array of predictions and the model version used.
 
 **Example**:
 
-```json
-POST /predict_batch
-[
-  {"feature1": value1, "feature2": value2, ...},
-  {"feature1": value3, "feature2": value4, ...},
-  ...
-]
-```
-
 Response:
 ```json
 {
   "predictions": [123, 456, ...],
-  "model_version": "v1"
 }
 ```
 
@@ -132,9 +110,9 @@ Response:
 
 **Endpoint**: `/train`
 
-**Method**: `POST`
+**Method**: `GET`
 
-**Description**: Initiates a training process using the provided data. The new model version is saved locally with an incremented version number.
+**Description**: Initiates a training process using the provided data. The new model version is saved locally with a uuid format.
 
 **Request Body**:
 - Optional JSON object specifying training parameters such as number of epochs, learning rate, etc. If not provided, defaults are used.
@@ -156,23 +134,19 @@ Response:
 ```json
 {
   "message": "Training completed successfully.",
-  "new_model_version": "v2"
+  "model_version": "7e42b3e1-f234-4ede-ae81-85c116b8f1f9"
 }
 ```
 
 ## Model Versioning
 
 ### Loading Models
-- Models are stored in the `models/` directory with filenames indicating their versions (e.g., `model_v1.pkl`, `model_v2.pkl`).
-- The latest version is loaded by default, but specific versions can be loaded if required.
+- Models are stored in the `files/model_versions/model_version_id` directory where inside each model version id stores
+a `model.pkl` file a folder called `artifacts` where the all the additional files will be stored, for example: Imputers, transformers or any addtional information and the `metrics` folder where the metrics are stored as .csv file.
+
 
 ### Saving Models
-- After training, the new model is saved with an incremented version number, e.g., if the latest version is `model_v1.pkl`, the new model is saved as `model_v2.pkl`.
-
-## Testing
-
-- Unit tests are provided in the `tests/` directory. These tests cover various aspects of the API, including single and batch inference and model training.
-- To run the tests, use a testing framework like `pytest`.
+- After training, the new model is saved with an random version number and with all the versioning files inside the folder.
 
 ## Dependencies
 
@@ -182,26 +156,11 @@ Response:
 pip install -r requirements.txt
 ```
 
-## Running the Application
-
-To start the FastAPI server locally, navigate to the project directory and run:
-
-```bash
-uvicorn app.main:app --reload
-```
 
 ## Docker
 
 A `Dockerfile` is provided for containerizing the application. To build the Docker image, use:
 
 ```bash
-docker build -t ml_api .
+docker compose up 
 ```
-
-To run the Docker container:
-
-```bash
-docker run -p 8000:8000 ml_api
-```
-
-This documentation serves as a guide for setting up and testing the machine learning API. For any additional questions or issues, please refer to the README file or contact the project maintainer.
