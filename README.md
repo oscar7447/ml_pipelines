@@ -62,8 +62,48 @@ qubika_test/
 ```
 
 ## FastAPI Endpoints
+### 1. **Training Endpoint**
 
-### 1. **Single Data Point Inference Endpoint**
+**Endpoint**: `/train`
+
+**Method**: `POST`
+
+**Description**: Initiates a training process using the provided data and model that you want to use. Right now the logistic regression model and random forest classifier are supported by the system. The new model version is saved locally with a uuid format.
+
+**Request Body**:
+- Optional JSON object specifying training parameters such as number of max_depth, learning rate, etc. If not provided, defaults are used.
+
+**Response**:
+- JSON object containing a message about the status of the training process and the new model version.
+
+**Example**:
+model_name
+POST /train
+
+```json
+
+{
+  "max_depth": 10
+}
+```
+![alt text](files/images/image-4.png)
+![alt text](files/images/image-3.png)
+
+Response:
+```json
+{
+  "model_version": "7e42b3e1-f234-4ede-ae81-85c116b8f1f9",
+
+  "model_parameters": """{'bootstrap': True, 'ccp_alpha': 0.0, 'class_weight': None, 'criterion': 'gini', 'max_depth': 10, 'max_features': 'sqrt', 'max_leaf_nodes': None, 'max_samples': None, 'min_impurity_decrease': 0.0, 'min_samples_leaf': 1""",
+
+  "model_name":"RandomForestClassifier(max_depth=10)"
+}
+```
+![alt text](files/images/image-5.png)
+![alt text](files/images/image-6.png)
+
+
+### 2. **Single Data Point Inference Endpoint**
 
 **Endpoint**: `/predict`
 
@@ -85,7 +125,9 @@ Response:
 ```
 ![alt text](files/images/image-8.png)
 ![alt text](files/images/image-9.png)
-### 2. **Batch Inference Endpoint**
+
+
+### 3. **Batch Inference Endpoint**
 
 **Endpoint**: `/predict_batch`
 
@@ -109,44 +151,7 @@ Response:
 ```
 ![alt text](files/images/image-10.png)
 ![alt text](files/images/image-11.png)
-### 3. **Training Endpoint**
 
-**Endpoint**: `/train`
-
-**Method**: `POST`
-
-**Description**: Initiates a training process using the provided data and model that you want to use. Right now the logistic regression model and random forest classifier are supported by the system. The new model version is saved locally with a uuid format.
-
-**Request Body**:
-- Optional JSON object specifying training parameters such as number of max_depth, learning rate, etc. If not provided, defaults are used.
-
-**Response**:
-- JSON object containing a message about the status of the training process and the new model version.
-
-**Example**:
-model_name
-```json
-POST /train
-
-{
-  "max_depth": 10
-}
-```
-![alt text](files/images/image-4.png)
-![alt text](files/images/image-3.png)
-
-Response:
-```json
-{
-  "model_version": "7e42b3e1-f234-4ede-ae81-85c116b8f1f9",
-
-  "model_parameters": """{'bootstrap': True, 'ccp_alpha': 0.0, 'class_weight': None, 'criterion': 'gini', 'max_depth': 10, 'max_features': 'sqrt', 'max_leaf_nodes': None, 'max_samples': None, 'min_impurity_decrease': 0.0, 'min_samples_leaf': 1""",
-
-  "model_name":"RandomForestClassifier(max_depth=10)"
-}
-```
-![alt text](files/images/image-5.png)
-![alt text](files/images/image-6.png)
 ## Model Versioning
 
 ### Loading Models
